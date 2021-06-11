@@ -3,13 +3,13 @@ provider "aws" {
 }
 
 module "webservers" {
-  source = "../../../modules/services/webservers"
-  cluster_name = "webservers-dev"
-  instance_type = "t2.nano"
-  min_size      = 2
-  max_size      = 5
-  desired_capacity  = 2
-}    
+  source           = "../../../modules/services/webservers"
+  cluster_name     = "webservers-dev"
+  instance_type    = "t2.nano"
+  min_size         = 2
+  max_size         = 5
+  desired_capacity = 2
+}
 
 # scale out - day
 resource "aws_autoscaling_schedule" "scale_out_business_hours" {
@@ -29,6 +29,6 @@ resource "aws_autoscaling_schedule" "scale_in_at_night" {
   max_size              = 10
   desired_capacity      = 2
   recurrence            = "0 17 * * *"
- 
+
   autoscaling_group_name = module.webservers.asg_name
 }
